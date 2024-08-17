@@ -86,4 +86,21 @@ public:
     }
 };
 ------------------
+#include <vector>
+#include <unordered_map>
+
+class Solution {
+public:
+    bool containsDuplicate(std::vector<int>& nums) {
+        std::unordered_map<int, int> num_count;
+
+        for (int num : nums) {
+            if (num_count[num] > 0) {
+                return true;
+            }
+            num_count[num]++;
+        }        
+        return false;
+    }
+};
 
