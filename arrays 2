@@ -1,0 +1,93 @@
+Given two strings s and t, return true if t is an anagram of s, and false otherwise.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: s = "anagram", t = "nagaram"
+Output: true
+Example 2:
+
+Input: s = "rat", t = "car"
+Output: false
+
+-------------
+hahshmaps : O (n)
+What auto Does:
+Type Deduction:
+
+In this loop, auto is deducing the type of it based on the elements of the container count.
+Since count is an unordered_map<char, int>, each element is a key-value pair, 
+specifically of type std::pair<const char, int>.
+
+#include <unordered_map>
+#include <string>
+
+class Solution {
+public:
+    bool isAnagram(std::string s, std::string t) {
+        if (s.size() != t.size()) {
+            return false;
+        }
+        
+        std::unordered_map<char, int> map;
+        
+        for (char x : s) {
+            map[x]++;
+        }
+        
+        for (char x : t) {
+            if (map[x] == 0) {
+                return false;
+            }
+            map[x]--;
+        }
+        
+        for (auto it : map) {
+            if (it.second != 0) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
+};
+--------------
+This code takes advantage of the fact that anagrams have the same characters, 
+but in different orders. By sorting the characters, the code transforms the problem 
+into a comparison of the sorted strings, simplifying the anagram check.
+However, it's worth noting that this approach has a time complexity of O(n log n)
+due to the sorting operation, where n is the length of the strings.
+
+
+class Solution {
+public:
+    bool isAnagram(string s, string t) {
+        sort(s.begin(), s.end());
+        sort(t.begin(), t.end());
+        return s == t;
+    }
+};
+----------------
+#include <iostream>
+#include <string>
+#include <set>
+
+class Solution {
+public:
+    bool isAnagram(std::string s, std::string t) {
+        // If the lengths are different, they cannot be anagrams
+        if (s.size() != t.size()) {
+            return false;
+        }
+        
+        // Create multisets from the strings
+        std::multiset<char> setS(s.begin(), s.end());
+        std::multiset<char> setT(t.begin(), t.end());
+        
+        // Compare the two multisets
+        return setS == setT;
+    }
+};
