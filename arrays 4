@@ -44,6 +44,12 @@ public:
         return output;
     }
 };
+------------------------
+auto:
+
+Automatically deduces the type of the variable based on the type of the expression it’s being assigned to.
+In this case, pair will automatically be deduced to be the type of the elements in anagramMap,
+which are key-value pairs (std::pair<const std::string, std::vector<std::string>>).
 
 ------------------------
 EXPL:
