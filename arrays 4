@@ -1,0 +1,100 @@
+Given an array of strings strs, group the anagrams together. You can return the answer in any order.
+
+An Anagram is a word or phrase formed by rearranging the letters of a different word or phrase, typically using all the original letters exactly once.
+
+ 
+
+Example 1:
+
+Input: strs = ["eat","tea","tan","ate","nat","bat"]
+Output: [["bat"],["nat","tan"],["ate","eat","tea"]]
+Example 2:
+
+Input: strs = [""]
+Output: [[""]]
+-------------------------
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+#include <iostream>
+#include <vector>
+#include <string>
+#include <unordered_map>
+#include <algorithm>
+
+class Solution {
+public:
+    vector<vector<string>> groupAnagrams(vector<string>& strs) {
+        unordered_map<string, vector<string>> anagramMap;
+
+        for (string str : strs) {
+            string sortedStr = str;
+            sort(sortedStr.begin(), sortedStr.end());
+            anagramMap[sortedStr].push_back(str);
+        }
+
+        vector<vector<string>> output;
+        for (auto& pair : anagramMap) {
+            output.push_back(pair.second);
+        }
+
+        return output;
+    }
+};
+
+------------------------
+EXPL:
+
+Step-by-Step Execution of groupAnagrams:
+Initial Setup:
+
+unordered_map<string, vector<string>> anagramMap;
+vector<vector<string>> output;
+strs = {"eat", "tea", "tan", "ate", "nat", "bat"}
+Iterating Through strs:
+
+Iteration 1:
+
+String: "eat"
+Sort: Sorting "eat" results in "aet".
+Insert: Add "eat" to anagramMap["aet"].
+anagramMap["aet"] = {"eat"}
+Iteration 2:
+
+String: "tea"
+Sort: Sorting "tea" results in "aet".
+Insert: Add "tea" to anagramMap["aet"].
+anagramMap["aet"] = {"eat", "tea"}
+Iteration 3:
+
+String: "tan"
+Sort: Sorting "tan" results in "ant".
+Insert: Add "tan" to anagramMap["ant"].
+anagramMap["ant"] = {"tan"}
+Iteration 4:
+
+String: "ate"
+Sort: Sorting "ate" results in "aet".
+Insert: Add "ate" to anagramMap["aet"].
+anagramMap["aet"] = {"eat", "tea", "ate"}
+Iteration 5:
+
+String: "nat"
+Sort: Sorting "nat" results in "ant".
+Insert: Add "nat" to anagramMap["ant"].
+anagramMap["ant"] = {"tan", "nat"}
+Iteration 6:
+
+String: "bat"
+Sort: Sorting "bat" results in "abt".
+Insert: Add "bat" to anagramMap["abt"].
+anagramMap["abt"] = {"bat"}
+Final anagramMap State:
+
+After all iterations, anagramMap looks like this:
+anagramMap["aet"] = {"eat", "tea", "ate"}
+anagramMap["ant"] = {"tan", "nat"}
+anagramMap["abt"] = {"bat"}
