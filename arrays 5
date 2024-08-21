@@ -1,1 +1,92 @@
-k
+Given an integer array nums and an integer k, return the k most frequent elements. You may return the answer in any order.
+
+Example 1:
+
+Input: nums = [1,1,1,2,2,3], k = 2
+Output: [1,2]
+Example 2:
+
+Input: nums = [1], k = 1
+Output: [1]
+-------------------
+
+#include <vector>
+#include <unordered_map>
+#include <algorithm>
+
+class Solution {
+public:
+    vector<int> topKFrequent(vector<int>& nums, int k) {
+        unordered_map<int, int> frequencyMap;
+
+        for (int num : nums) {
+            frequencyMap[num]++;
+        }
+
+        vector<int> uniqueElements;
+        for (auto& pair : frequencyMap) {
+            uniqueElements.push_back(pair.first);
+        }
+
+        sort(uniqueElements.begin(), uniqueElements.end(), [&](int a, int b) {
+            return frequencyMap[a] > frequencyMap[b];
+        });
+
+        vector<int> output;
+        for (int i = 0; i < k; i++) {
+            output.push_back(uniqueElements[i]);
+        }
+
+        return output;
+    }
+};
+----------------------
+. Sorting by Element Value in Descending Order
+If you want to sort integers in descending order:
+
+
+vector<int> nums = {3, 1, 4, 1, 5, 9};
+sort(nums.begin(), nums.end(), [](int a, int b) {
+    return a > b;
+});
+// Result: nums = {9, 5, 4, 3, 1, 1}
+
+
+2. Sorting Strings by Length
+To sort a vector of strings by their length in ascending order:
+
+
+vector<string> words = {"apple", "kiwi", "banana", "cherry"};
+sort(words.begin(), words.end(), [](const string& a, const string& b) {
+    return a.size() < b.size();
+});
+
+3. Sorting Pairs by Second Element
+For a vector of pairs, if you want to sort by the second element of the pair in ascending order:
+
+
+vector<pair<int, int>> pairs = {{1, 3}, {2, 1}, {3, 2}};
+sort(pairs.begin(), pairs.end(), [](const pair<int, int>& a, const pair<int, int>& b) {
+    return a.second < b.second;
+});
+// Result: pairs = {{2, 1}, {3, 2}, {1, 3}}
+
+
+
+4. Sorting by Custom Object Attribute
+Assume you have a Person struct and you want to sort by age:
+
+
+struct Person {
+    string name;
+    int age;
+};
+
+vector<Person> people = {{"Alice", 30}, {"Bob", 25}, {"Charlie", 35}};
+sort(people.begin(), people.end(), [](const Person& a, const Person& b) {
+    return a.age < b.age;
+});
+// Result: people = {{"Bob", 25}, {"Alice", 30}, {"Charlie", 35}}
+
+----------------------------
+
